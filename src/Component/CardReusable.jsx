@@ -8,6 +8,7 @@ import person from '../assets/Frame 1984077977.svg'
 import inbox from '../assets/Frame 1984077980.svg'
 import message from '../assets/Frame 1984077979.svg'
 import text from '../assets/Document Add.svg'
+import DefaultIcon from '../../src/assets/Document.svg'
 const getIcon = (qualified) => {
   if (qualified > 90) return <StarBorderIcon sx={{ color: "#007D5F" , fontSize:"18px"}} />;
   if (qualified > 75) return <StarBorderIcon sx={{ color: "#6254C7" , fontSize:"18px"}} />;
@@ -16,7 +17,7 @@ const getIcon = (qualified) => {
 };
 
 const CardReusable = ({ data }) => {
-  console.log("data", data);
+  // console.log("data", data);
 
   return (
    <Box width={"270px"} height={"228px"} bgcolor={"#FFFFFF"}   border="1px solid #E4E4E4" borderRadius={3} padding={1.5} >

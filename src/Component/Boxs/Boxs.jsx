@@ -11,6 +11,7 @@ import interview from '../../assets/Frame 1984078184 (1).svg'
 import accept from '../../assets/Frame 1984078182 (1).svg'
 const Boxs = () => {
   
+
   const initialColumns = [...Array(5)].map((_, index) => ({
     id: `column-${index}`,
     items: cardDataArr.map((data, cardIndex) => ({

@@ -95,7 +95,7 @@ export default function Sidebar({ open, selectedIndex, setSelectedIndex }) {
      
         <List>
           {texts.map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+            <ListItem key={`${text}-${index}`} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
        selected={selectedIndex === index}
   onClick={() => setSelectedIndex(index)}
