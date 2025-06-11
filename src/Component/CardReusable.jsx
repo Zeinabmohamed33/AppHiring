@@ -2,7 +2,7 @@ import { Avatar, Box, Typography } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import linkin from '../../src/assets/hugeicons_linkedin-02.svg'
-import group from '../../../task/src/assets/Users Group Rounded.svg'
+import group from '../../../task/src/assets/998.svg'
 import upload from '../../../task/src/assets/Export.svg'
 import person from '../assets/Frame 1984077977.svg'
 import inbox from '../assets/Frame 1984077980.svg'
