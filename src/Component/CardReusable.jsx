@@ -1,14 +1,14 @@
 import { Avatar, Box, Typography } from "@mui/material";
 import Divider from '@mui/material/Divider';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import linkin from '../../src/assets/hugeicons_linkedin-02.svg'
+import linkin from '../assets/hugeicons_linkedin-02.svg'
 import group from '../assets/998.svg'
-import upload from '../../../task/src/assets/Export.svg'
+import upload from '../assets/Export.svg'
 import person from '../assets/Frame 1984077977.svg'
 import inbox from '../assets/Frame 1984077980.svg'
 import message from '../assets/Frame 1984077979.svg'
 import text from '../assets/Document Add.svg'
-import DefaultIcon from '../../src/assets/Document.svg'
+import DefaultIcon from '../assets/Document.svg'
 const getIcon = (qualified) => {
   if (qualified > 90) return <StarBorderIcon sx={{ color: "#007D5F" , fontSize:"18px"}} />;
   if (qualified > 75) return <StarBorderIcon sx={{ color: "#6254C7" , fontSize:"18px"}} />;
