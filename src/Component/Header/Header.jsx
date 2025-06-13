@@ -106,7 +106,7 @@ export default function Header() {
           <Box display="flex" gap={1}>
             <Button
               sx={{
-                width: '140px',
+                width: '148px',
                 height: '30px',
                 fontSize: '11px',
                 color: '#616161',
@@ -125,7 +125,7 @@ export default function Header() {
 
             <Button
               sx={{
-                width: '140px',
+                width: '132px',
                 height: '30px',
                 fontSize: '12px',
                 color: '#616161',
