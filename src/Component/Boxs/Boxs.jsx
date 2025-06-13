@@ -64,7 +64,7 @@ const PurpleLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
     setColumns(newColumns);
   };
-  const columnWidth = isMobile ? "258px" : isDesktop ? "294px" : "294px";
+  const columnWidth = isMobile ? "255px" : isDesktop ? "294px" : "294px";
   
   
   const columnGap = isDesktop ? "16px" : isTablet ? "12px" : "8px";
