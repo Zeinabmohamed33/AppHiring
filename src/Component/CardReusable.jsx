@@ -1,4 +1,4 @@
-import { Avatar, Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography,useMediaQuery, useTheme} from "@mui/material";
 import Divider from '@mui/material/Divider';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import linkin from '../assets/hugeicons_linkedin-02.svg'
@@ -18,9 +18,11 @@ const getIcon = (qualified) => {
 
 const CardReusable = ({ data }) => {
   // console.log("data", data);
+const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-   <Box width={"270px"} height={"228px"} bgcolor={"#FFFFFF"}   border="1px solid #E4E4E4" borderRadius={3} padding={1.5} >
+   <Box  width={isSmallScreen ? "240px" : "270px"}  height={"228px"} bgcolor={"#FFFFFF"}   border="1px solid #E4E4E4" borderRadius={3} padding={1} >
   <Box display="flex" gap={3} height={"40px"} alignItems="center">
     <Avatar
       alt="Profile image"

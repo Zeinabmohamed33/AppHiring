@@ -8,7 +8,9 @@ import gropimg from '../../assets/Users Group Two Rounded.svg'
 import notficationimg from '../../assets/Document.svg'
 import setting from '../../assets/Widget 6.svg'
 import question from '../../assets/Question Square.svg'
-import { styled } from '@mui/material/styles';
+import * as React from 'react';
+import { styled, useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -21,14 +23,18 @@ import List from '@mui/material/List';
 const drawerWidth = 240; 
 
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: 'hidden',
-});
+const openedMixin = (theme) => {
+  const isSmallScreen = window.innerWidth < theme.breakpoints.values.sm;
+
+  return {
+    width: isSmallScreen ? '99vw' : drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    overflowX: 'hidden',
+  };
+};
 
 const closedMixin = (theme) => ({
   transition: theme.transitions.create('width', {
@@ -65,8 +71,12 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const icons = [InboxImg, StarredImg, SendEmailImg, DraftsImg , simg , gropimg , notficationimg , setting ,question] ;
 const texts = ['Inbox', 'Starred', 'Send email', 'Drafts' ,'Inbox', 'Inbox', 'Inbox', 'setting','question'];
 export default function Sidebar({ open, selectedIndex, setSelectedIndex }) {
-     
-    
+       const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+
+
+
   return (
     <>
  <Drawer  variant="permanent"
@@ -79,6 +89,11 @@ export default function Sidebar({ open, selectedIndex, setSelectedIndex }) {
         borderRight: 'none', 
       boxShadow: 'none', 
        overflowX: 'hidden',
+      width: open
+  ? isSmallScreen
+    ? '45vw'
+    : drawerWidth
+  : '92px',
     },
   }}>
         <DrawerHeader  style={{ justifyContent: 'center', margin:'9px 0'  }}>

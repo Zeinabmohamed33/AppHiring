@@ -1,6 +1,6 @@
 import { Droppable, DragDropContext, Draggable } from "@hello-pangea/dnd";
 import React, { useState } from "react";
-import { Box , Typography ,LinearProgress, styled } from "@mui/material";
+import { Box , Typography ,LinearProgress, styled , useMediaQuery, useTheme } from "@mui/material";
 import { cardDataArr } from "../../fake_data/FakeData";
 import CardReusable from "../CardReusable";
 import list from '../../assets/vertical.svg'
@@ -10,7 +10,10 @@ import sent from '../../assets/Frame 1984078184.svg'
 import interview from '../../assets/Frame 1984078184 (1).svg'
 import accept from '../../assets/Frame 1984078182 (1).svg'
 const Boxs = () => {
-  
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const initialColumns = [...Array(5)].map((_, index) => ({
     id: `column-${index}`,
@@ -61,138 +64,149 @@ const PurpleLinearProgress = styled(LinearProgress)(({ theme }) => ({
 
     setColumns(newColumns);
   };
+  const columnWidth = isMobile ? "269px" : isDesktop ? "294px" : "294px";
+  
+  
+  const columnGap = isDesktop ? "16px" : isTablet ? "12px" : "8px";
 
   return (
-   <DragDropContext onDragEnd={onDragEnd}>
-  <Box display="flex" alignItems="center" gap={2}  sx={{
-      pt: 0.5,    
-      px: 1.5,    
-      pb: 0,     
-    }}>
-    {columns.map((column, colIndex) => (
-      <Droppable key={column.id} droppableId={`column-${colIndex}`}>
-        {(provided) => (
-          <Box
-            className="column-container"
-            sx={{
-              width: "294px",
-              height: "510px",
-              borderRadius: "16px",
-              backgroundColor: "#F9F9F9",
-              p: 0, 
-              display: "flex",
-              flexDirection: "column",
-              gap: 0, 
-            }}
-          >
-           
-           <Box
-  sx={{
-    p: 2,
-    backgroundColor: "#F9F9F9",
-    borderRadius: "16px 16px 0 0",
-    borderBottom: "0",
-    height: "50px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center"
-  }}
->
-  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-    <img 
-      src={
-        colIndex === 0 ? applied : 
-        colIndex === 1 ? screen :
-        colIndex === 2 ? sent :
-        colIndex === 3 ? interview :
-        accept
-      } 
-      alt="status icon" 
-      style={{ width: "24px", height: "24px" }}
-    />
-    <Typography variant="p" sx={{ fontWeight: 400 , color:"#282828" }}>
-      {
-        colIndex === 0 ? "Applied" : 
-        colIndex === 1 ? "Screened" :
-        colIndex === 2 ? "Sent Test" :
-        colIndex === 3 ? "Interviewing" :
-        "Accepted"
-      }
-    </Typography>
-  </Box>
-  <Box>
-    <img src={list} alt="menu" style={{ width: "20px", height: "20px" }} />
-  </Box>
-</Box>
+  <DragDropContext onDragEnd={onDragEnd}>
+      <Box 
+        display="flex"
+        flexWrap={isMobile || isTablet ? "wrap" : "nowrap"} 
+        justifyContent={isMobile ? "center" : "flex-start"}
+        gap={columnGap}
+        sx={{
+          pt: 0.5,
+          px: isMobile ? 0: 0,
+          pb: 0,
+          overflowX: isDesktop ? "auto" : "visible",
+          minHeight: "530px", 
+        }}
+      >
+        {columns.map((column, colIndex) => (
+          <Droppable key={column.id} droppableId={`column-${colIndex}`}>
+            {(provided) => (
+              <Box
+                className="column-container"
+                sx={{
+                  width: columnWidth,
+                  minWidth: columnWidth, 
+                  height: "510px",
+                  borderRadius: "16px",
+                  backgroundColor: "#F9F9F9",
+                  p: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 0,
+                  mb: isMobile || isTablet ? 2 : 0,
+                  flexShrink: 0,
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+                }}
+              >
+                <Box
+                  sx={{
+                    p: 2,
+                    backgroundColor: "#F9F9F9",
+                    borderRadius: "16px 16px 0 0",
+                    borderBottom: "0",
+                    height: "50px",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <img 
+                      src={
+                        colIndex === 0 ? applied : 
+                        colIndex === 1 ? screen :
+                        colIndex === 2 ? sent :
+                        colIndex === 3 ? interview :
+                        accept
+                      } 
+                      alt="status icon" 
+                      style={{ width: "24px", height: "24px" }}
+                    />
+                    <Typography variant="p" sx={{ fontWeight: 400, color: "#282828" }}>
+                      {
+                        colIndex === 0 ? "Applied" : 
+                        colIndex === 1 ? "Screened" :
+                        colIndex === 2 ? "Sent Test" :
+                        colIndex === 3 ? "Interviewing" :
+                        "Accepted"
+                      }
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <img src={list} alt="menu" style={{ width: "20px", height: "20px" }} />
+                  </Box>
+                </Box>
 
-           
-            <Box
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              sx={{
-                flex: 1,
-                overflowY: "auto",
-                p: 2,
-              }}
-            >
-              {column.items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
-                    <Box
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                      sx={{
-                        opacity: snapshot.isDragging ? 0.8 : 1,
-                        transform: snapshot.isDragging ? "scale(1.02)" : "scale(1)",
-                        transition: "all 0.2s",
-                        mb: 2, 
-                      }}
-                    >
-                      <CardReusable data={item.content} />
-                    </Box>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </Box>
+                <Box
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  sx={{
+                    flex: 1,
+                    overflowY: "auto",
+                    p: 2,
+                  }}
+                >
+                  {column.items.map((item, index) => (
+                    <Draggable key={item.id} draggableId={item.id} index={index}>
+                      {(provided, snapshot) => (
+                        <Box
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          sx={{
+                            opacity: snapshot.isDragging ? 0.8 : 1,
+                            transform: snapshot.isDragging ? "scale(1.02)" : "scale(1)",
+                            transition: "all 0.2s",
+                            mb: 2, 
+                          }}
+                        >
+                          <CardReusable data={item.content} />
+                        </Box>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </Box>
 
-         
-            <Box
-              sx={{
-                p: 2,
-                backgroundColor: "#F9F9F9",
-                borderRadius: "0 0 16px 16px",
-                border: "0",
-                height:"90px"
-              }}
-            >
-                 <Box display="flex" justifyContent="space-between" mb={1}>
-        <Typography fontWeight={500} color="text.secondary">
-          Conversion Rate
-        </Typography>
-        <Typography fontWeight={700}>73%</Typography>
+                <Box
+                  sx={{
+                    p: 2,
+                    backgroundColor: "#F9F9F9",
+                    borderRadius: "0 0 16px 16px",
+                    border: "0",
+                    height: "90px"
+                  }}
+                >
+                  <Box display="flex" justifyContent="space-between" mb={1}>
+                    <Typography fontWeight={500} color="text.secondary">
+                      Conversion Rate
+                    </Typography>
+                    <Typography fontWeight={700}>73%</Typography>
+                  </Box>
+
+                  <PurpleLinearProgress variant="determinate" value={73} />
+
+                  <Box display="flex" justifyContent="space-between" mt={1}>
+                    <Typography fontSize={14} color="text.secondary">
+                      18 Active
+                    </Typography>
+                    <Typography fontSize={14} color="text.secondary">
+                      6 Dropped
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+          </Droppable>
+        ))}
       </Box>
-
-    
-      <PurpleLinearProgress variant="determinate" value={73} />
-
-      
-      <Box display="flex" justifyContent="space-between" mt={1}>
-        <Typography fontSize={14} color="text.secondary">
-          18 Active
-        </Typography>
-        <Typography fontSize={14} color="text.secondary">
-          6 Dropped
-        </Typography>
-      </Box>
-            </Box>
-          </Box>
-        )}
-      </Droppable>
-    ))}
-  </Box>
-</DragDropContext>
+    </DragDropContext>
   );
 };
 

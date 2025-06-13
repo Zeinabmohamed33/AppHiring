@@ -11,7 +11,7 @@ import Navbar from "../Navbar/Navbar";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
 import Boxs from "../Boxs/Boxs";
-
+import { useMediaQuery } from '@mui/material';
 const drawerWidth = 240;
 
 const DrawerHeader = styled("div")(({ theme }) => ({
@@ -23,18 +23,24 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 
 const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
+  shouldForwardProp: (prop) => prop !== "open" && prop !== "isSmallScreen",
+})(({ theme, open, isSmallScreen }) => ({
   zIndex: theme.zIndex.drawer + 1,
   height: "68px",
   backgroundColor: "#FFFFFF",
   boxShadow: "0px 1px 2px rgba(0, 0, 0, 0.359)",
-
   transition: theme.transitions.create(["width", "margin"], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  ...(open && {
+
+ 
+  ...(open && isSmallScreen && {
+    display: "none",
+  }),
+
+  
+  ...(open && !isSmallScreen && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
@@ -42,26 +48,39 @@ const AppBar = styled(MuiAppBar, {
       duration: theme.transitions.duration.enteringScreen,
     }),
   }),
+
   ...(!open && {
     marginLeft: "92px",
     width: "calc(100% - 92px)",
   }),
 }));
 
+
 export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+ const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const handleDrawerToggle = () => {
+    setOpen(!open);
+  };
 
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <IconButton
-        onClick={() => setOpen(!open)}
+          onClick={handleDrawerToggle}
         sx={{
           position: "fixed",
           top: 18,
-          left: open ? `${drawerWidth}px` : `79px`,
+          left: isSmallScreen
+      ? open
+        ? "90vw" 
+        : "20vw"  
+      : open
+      ? `${drawerWidth}px` 
+      : `79px`,         
           zIndex: theme.zIndex.drawer + 2,
           backgroundColor: "#fff",
           border: "1px solid #EDEDED",
@@ -89,7 +108,7 @@ export default function Dashboard() {
         )}
       </IconButton>
 
-      <AppBar position="fixed" open={open} sx={{ height: "68px" }}>
+      <AppBar position="fixed" open={open} sx={{ height: "68px" }} isSmallScreen={isSmallScreen}>
         <Navbar />
       </AppBar>
 
@@ -98,24 +117,39 @@ export default function Dashboard() {
         selectedIndex={selectedIndex}
         setSelectedIndex={setSelectedIndex}
       />
-
-      <Box display={"flex"} flexDirection={"column"}>
-        <Box
+ {(!open || !isSmallScreen) && (
+      <Box 
+  sx={{
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+    width: 
+      open ? `calc(100vw - 240px)` : `calc(100vw - 92px)`, 
+ 
+    transition: "all 0.3s ease-in-out",
+  }}>
+        <Box 
           sx={{
-            maxWidth: "93vw",
+            maxWidth: {
+      xs: "73vw",  
+      sm: "93vw",  
+      md: "93vw",  
+      lg: "93vw",   
+      xl: "93vw",   
+    },
             width: "100%",
           }}
         >
           <DrawerHeader />
 
           <Box>
-            <Header />
+            <Header   />
           </Box>
         </Box>
         <Box>
           <Box
             sx={{
-              maxWidth: "93vw",
+              maxWidth: "100vw",
               overflowX: "auto",
               overflowY: "hidden",
               whiteSpace: "nowrap",
@@ -129,6 +163,7 @@ export default function Dashboard() {
           </Box>
         </Box>
       </Box>
+        )}
     </Box>
   );
 }
