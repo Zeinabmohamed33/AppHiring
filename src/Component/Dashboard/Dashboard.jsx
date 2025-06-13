@@ -155,7 +155,7 @@ export default function Dashboard() {
               whiteSpace: "nowrap",
               display: "flex",
               gap: 2,
-              px: 2,
+              px: 1,
               py: 1,
             }}
           >

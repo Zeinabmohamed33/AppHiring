@@ -22,7 +22,7 @@ const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-   <Box  width={isSmallScreen ? "240px" : "270px"}  height={"228px"} bgcolor={"#FFFFFF"}   border="1px solid #E4E4E4" borderRadius={3} padding={1} >
+   <Box  width={isSmallScreen ? "240px" : "270px"}  height={"228px"} bgcolor={"#FFFFFF"}   border="1px solid #E4E4E4" borderRadius={3} padding={1.5} >
   <Box display="flex" gap={3} height={"40px"} alignItems="center">
     <Avatar
       alt="Profile image"
@@ -35,13 +35,13 @@ const theme = useTheme();
     </Box>
   </Box>
 
-  <Box marginTop={3} display="flex" gap={1}>
+  <Box marginTop={3} display="flex" gap={0.5}>
  
     <Box
       display="flex"
       justifyContent="center"
       alignItems="center"
-      width="129px"
+      width="120px"
       height="30px"
       fontSize="12px"
       bgcolor={
@@ -75,7 +75,7 @@ const theme = useTheme();
   display="flex"
   justifyContent="center"
   alignItems="center"
-  width="110px"
+  width="100px"
   height="32px"
   fontSize="12px"
   bgcolor="#F9F9F9"
@@ -151,8 +151,8 @@ const theme = useTheme();
   {data.language}
 </Box>
   </Box>
-    <Divider  sx={{
-      width: '238px',
+    <Divider   width={isSmallScreen ? "200px" : '238px'} sx={{
+      
       backgroundColor: '#E0E0E0',
     
       margin: '0 auto',

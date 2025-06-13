@@ -64,7 +64,7 @@ const theme = useTheme();
     sx={{
       display: 'flex',
       alignItems: 'center',
-      gap: 0.5,
+      gap: 0.2,
       width: isSmallScreen ? '100%' : 'auto',
       justifyContent: isSmallScreen ? 'center' : 'flex-end',
       paddingTop: isSmallScreen ? '8px' : 0,
